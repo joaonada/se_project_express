@@ -1,3 +1,10 @@
 const router = require("express").Router();
+const { getUsers } = require("../controllers");
+const { createUser } = require("../controllers");
 
-router.get("/users", () => console.log("GET users"));
+router.get("/", getUsers, createUser);
+
+
+
+
+module.exports = router;
