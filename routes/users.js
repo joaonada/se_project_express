@@ -1,6 +1,5 @@
 const router = require("express").Router();
-const { getUsers } = require("../controllers");
-const { createUser } = require("../controllers");
+const { getUsers, createUser } = require("../controllers/users");
 
 router.get("/", getUsers, createUser);
 
