@@ -31,7 +31,7 @@ const createUser = (req, res) => {
 };
 
 const getUser = (req, res) => {
-  const { userId } = req.params;
+  const { userId } = req.params;  
   User.findById(userId)
     .orFail()
     .then((user) => res
@@ -45,7 +45,7 @@ const getUser = (req, res) => {
 if (err.name === 'CastError') {
   return res.status(400).send({ message: 'Invalid user ID format' });
 }
-// For any other errors
+
 return res.status(500).send({ message: 'An error has occurred on the server.' });
     });
 };
