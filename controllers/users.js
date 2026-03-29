@@ -9,7 +9,7 @@ const getUsers = (req, res) => {
     .catch((err) => {
       console.error(err);
       return res
-        .status(INTERNAL_SERVER_ERROR)
+        .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
         .send({ message: "An error has occurred on the server." });
     });
 };
@@ -22,7 +22,7 @@ const createUser = (req, res) => {
     .catch((err) => {
       console.error(err);
       if (err.name === "ValidationError") {
-        return res.status(400).send({ message: err.message });
+        return res.status(HTTP_STATUS.BAD_REQUEST).send({ message: err.message });
       }
       return res
         .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
@@ -43,11 +43,11 @@ const getUser = (req, res) => {
           .send({ message: "Requested resource not found" });
       }
       if (err.name === "CastError") {
-        return res.status(400).send({ message: "Invalid user ID format" });
+        return res.status(HTTP_STATUS.BAD_REQUEST).send({ message: "Invalid user ID format" });
       }
 
       return res
-        .status(500)
+        .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
         .send({ message: "An error has occurred on the server." });
     });
 };

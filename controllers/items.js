@@ -23,7 +23,7 @@ const createItem = (req, res) => {
     .catch((err) => {
       console.error(err);
       if (err.name === "ValidationError") {
-        return res.status(400).send({ message: err.message });
+        return res.status(HTTP_STATUS.BAD_REQUEST).send({ message: err.message });
       }
       return res
         .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
@@ -52,7 +52,7 @@ const putItemLike = (req, res) => {
     .catch((err) => {
       console.error(err);
       if (err.name === "ValidationError") {
-        return res.status(400).send({ message: err.message });
+        return res.status(HTTP_STATUS.BAD_REQUEST).send({ message: err.message });
       }
       return res
         .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
