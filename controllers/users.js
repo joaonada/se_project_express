@@ -1,5 +1,5 @@
 const User = require("../models/user");
-const { HTTP_STATUS } = require("../utils/constants.js");
+const { HTTP_STATUS } = require("../utils/constants");
 
 //  GET /users
 

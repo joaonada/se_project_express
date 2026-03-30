@@ -1,6 +1,6 @@
 const item = require("../models/clothingItem");
 
-const { HTTP_STATUS } = require("../utils/constants.js");
+const { HTTP_STATUS } = require("../utils/constants");
 
 const getAllItems = (req, res) => {
   item
@@ -19,7 +19,7 @@ const createItem = (req, res) => {
 
   item
     .create({ name, weather, imageUrl })
-    .then((item) => res.status(201).send(item))
+    .then((createdItem) => res.status(201).send(createdItem))
     .catch((err) => {
       console.error(err);
       if (err.name === "ValidationError") {
@@ -35,7 +35,7 @@ const deleteItem = (req, res) => {
   const { id } = req.params;
   item
     .findByIdAndDelete(id)
-    .then((item) => res.status(200).send(item))
+    .then((deletedItem) => res.status(200).send(deletedItem))
     .catch((err) => {
       console.error(err);
       return res
@@ -48,7 +48,7 @@ const putItemLike = (req, res) => {
 
   item
     .findByIdAndUpdate(req.params.id, { $addToSet: { likes: req.user._id } }, { new: true })
-    .then((item) => res.status(201).send(item))
+    .then((updatedItem) => res.status(200).send(updatedItem))
     .catch((err) => {
       console.error(err);
       if (err.name === "ValidationError") {
@@ -63,7 +63,7 @@ const putItemLike = (req, res) => {
 const deleteItemLike = (req, res) => {
   item
     .findByIdAndUpdate(req.params.id, { $pull: { likes: req.user._id } }, { new: true })
-    .then((item) => res.status(200).send(item))
+    .then((updatedItem) => res.status(200).send(updatedItem))
     .catch((err) => {
       console.error(err);
       return res
