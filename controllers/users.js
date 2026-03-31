@@ -5,7 +5,7 @@ const { HTTP_STATUS } = require("../utils/constants");
 
 const getUsers = (req, res) => {
   User.find({})
-    .then((users) => res.status(200).send(users))
+    .then((users) => res.status(HTTP_STATUS.OK).send(users))
     .catch((err) => {
       console.error(err);
       return res
@@ -18,11 +18,11 @@ const createUser = (req, res) => {
   const { name, avatar } = req.body;
 
   User.create({ name, avatar })
-    .then((user) => res.status(201).send(user))
+    .then((user) => res.status(HTTP_STATUS.CREATED).send(user))
     .catch((err) => {
       console.error(err);
       if (err.name === "ValidationError") {
-        return res.status(HTTP_STATUS.BAD_REQUEST).send({ message: err.message });
+        return res.status(HTTP_STATUS.BAD_REQUEST).send({ message: "Invalid data" });
       }
       return res
         .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
@@ -34,16 +34,16 @@ const getUser = (req, res) => {
   const { userId } = req.params;
   User.findById(userId)
     .orFail()
-    .then((user) => res.status(200).send(user))
+    .then((user) => res.status(HTTP_STATUS.OK).send(user))
     .catch((err) => {
       console.error(err);
       if (err.name === "DocumentNotFoundError") {
         return res
-          .status(404)
+          .status(HTTP_STATUS.NOT_FOUND)
           .send({ message: "Requested resource not found" });
       }
       if (err.name === "CastError") {
-        return res.status(HTTP_STATUS.BAD_REQUEST).send({ message: "Invalid user ID format" });
+        return res.status(HTTP_STATUS.BAD_REQUEST).send({ message: "Invalid data" });
       }
 
       return res
