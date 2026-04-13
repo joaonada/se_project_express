@@ -1,27 +1,29 @@
+const path = require("path");
 const express = require("express");
 const mongoose = require("mongoose");
-const mainRouter = require("./routes/index");
 
+const { register, login } = require("./controllers/auth");
+const auth = require("./middleware/auth");
+
+const { PORT = 3000, BASE_PATH } = process.env;
 const app = express();
-const { PORT = 3001 } = process.env;
 
-mongoose
-.connect("mongodb://127.0.0.1:27017/wtwr_db")
-.then(() => {
-  console.log("Connected to DB");
-})
-.catch(console.error);
+const cors = require("cors");
+
+app.use(cors());
+
+mongoose.connect("mongodb://localhost:27017/wtwr_db");
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
-app.use((req, res, next) => {
-  req.user = { _id: '5d8b8592978f8bd833ca8134' };
-  next();
-});
+app.post("/signup", register);
+app.post("/signin", login);
 
-app.use("/", mainRouter);
+app.use("/items", auth, require("./routes/items"));
 
+app.use(express.static(path.join(__dirname, "public")));
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log("Link to the server:");
+  console.log(BASE_PATH);
 });
-
