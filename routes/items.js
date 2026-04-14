@@ -7,14 +7,6 @@ const {
   deleteItemLike,
 } = require("../controllers/items");
 
-console.log({
-  getAllItems,
-  createItem,
-  deleteItem,
-  putItemLike,
-  deleteItemLike,
-});
-
 router.get("/", getAllItems);
 router.post("/", createItem);
 router.delete("/:id", deleteItem);

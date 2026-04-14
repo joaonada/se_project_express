@@ -1,7 +1,7 @@
-const Post = require('../models/post');
+const ClothingItem = require('../models/clothingItem');
 
 module.exports.getPosts = (req, res) => {
-  Post.find({})
-    .then(posts => res.send({ data: posts }))
+  ClothingItem.find({})
+    .then(clothingItems => res.send({ data: clothingItems }))
     .catch(() => res.status(500).send({ message: 'Error' }));
 };

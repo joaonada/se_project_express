@@ -41,23 +41,20 @@ const deleteItem = (req, res) => {
     .then((foundItem) => {
       if (foundItem.owner.toString() === req.user._id.toString()) {
         return foundItem.deleteOne()
-          .then(() => {
-            return res.status(HTTP_STATUS.OK).send({ message: "Item has been deleted" });
-          });
-      } else {
-        return res.status(HTTP_STATUS.FORBIDDEN).send({ message: "can not do it" });
+          .then(() => res.status(HTTP_STATUS.OK).send({ message: "Item has been deleted" }));
       }
+      return res.status(HTTP_STATUS.FORBIDDEN).send({ message: "Access denied" });
     })
     .catch((err) => {
-  console.error(err);
-  if (err.name === "DocumentNotFoundError") {
-    return res.status(HTTP_STATUS.NOT_FOUND).send({ message: "Requested resource not found" });
-  }
-  if (err.name === "CastError") {
-    return res.status(HTTP_STATUS.BAD_REQUEST).send({ message: "Invalid data" });
-  }
-  return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).send({ message: "An error has occurred on the server." });
-});
+      console.error(err);
+      if (err.name === "DocumentNotFoundError") {
+        return res.status(HTTP_STATUS.NOT_FOUND).send({ message: "Requested resource not found" });
+      }
+      if (err.name === "CastError") {
+        return res.status(HTTP_STATUS.BAD_REQUEST).send({ message: "Invalid data" });
+      }
+      return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).send({ message: "An error has occurred on the server." });
+    });
 };
 
 const putItemLike = (req, res) => {

@@ -1,7 +1,8 @@
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 const User = require("../models/user");
 const { HTTP_STATUS } = require("../utils/constants");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+
 const { JWT_SECRET } = require("../utils/config");
 
 //  GET /users
