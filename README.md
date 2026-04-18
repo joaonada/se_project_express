@@ -1,7 +1,7 @@
 # WTWR (What to Wear?): Back End
 The back-end project is focused on creating a server for the WTWR application.
 with a deeper understanding working with databases, set up security and testing, and deploy web applications on a remote machine. 
-Our goal is to create a server with an API and user authorization.
+My goal is to Expand the User Schema with Email and Password.
 We are specially working with:
 
 1 Technologies Used:
@@ -21,5 +21,11 @@ We are specially working with:
 
 `npm run dev` — to launch the server with the hot reload feature
 
+`npm run lint` — to to check errors and problems to be solve 
+
 ### Testing
-Before committing your code, make sure you edit the file `sprint.txt` in the root folder. The file `sprint.txt` should contain the number of the sprint you're currently working on. For ex. 12
+Before committing my code, I have to make sure that the API requests in Postman checks the project independently.
+
+#### Link of my Project Pitch Video
+https://drive.google.com/file/d/17XitcXF4xMl8esRP0Reo33-fCp5TlFVY/view?usp=drive_link
+
