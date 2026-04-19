@@ -4,7 +4,6 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 
 const { register, login } = require("./controllers/auth");
-const auth = require("./middlewares/auth");
 
 const { PORT = 3001, BASE_PATH } = process.env;
 const app = express();
@@ -20,7 +19,9 @@ app.use(express.urlencoded({ extended: false }));
 app.post("/signup", register);
 app.post("/signin", login);
 
-app.use("/items", auth, require("./routes/items"));
+app.use("/items", require("./routes/items"));
+
+app.use("/users", require("./routes/users"));
 
 app.use(express.static(path.join(__dirname, "public")));
 app.listen(PORT, () => {

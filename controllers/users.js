@@ -5,7 +5,8 @@ const { HTTP_STATUS } = require("../utils/constants");
 
 const { JWT_SECRET } = require("../utils/config");
 
-//  GET /users
+//  GET /users - get current user
+
 
 const getUsers = (req, res) => {
   User.find({})
@@ -24,7 +25,11 @@ const createUser = async (req, res) => {
   const hashedPassword = await bcrypt.hash(password, saltRounds);
 
   User.create({ name, avatar, email, password: hashedPassword })
-    .then((user) => res.status(HTTP_STATUS.CREATED).send(user))
+  .then((user) => {
+    const userObject = user.toObject();
+    delete userObject.password;
+    res.status(HTTP_STATUS.CREATED).send(userObject);
+  })
     .catch((err) => {
       console.error(err);
       if (err.code === 11000) {
