@@ -1,6 +1,48 @@
+const user = require("../models/user");
 const item = require("../models/clothingItem");
 
 const { HTTP_STATUS } = require("../utils/constants");
+
+const getCurrentUser = (req, res) => {
+  user
+    .findById(req.user._id)
+    .then((currentUser) => res.status(HTTP_STATUS.OK).send(currentUser))
+    .catch((err) => {
+      console.error(err);
+      return res
+        .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
+        .send({ message: "An error has occurred on the server." });
+});
+};
+
+const updateCurrentUser = (req, res) => {
+  const { name, avatar } = req.body;
+
+  user
+    .findByIdAndUpdate(
+      req.user._id,
+      { name, avatar },
+      { new: true, runValidators: true },
+    )
+    .orFail()
+    .then((updateUser) => res.status(HTTP_STATUS.OK).send(updateUser))
+    .catch((err) => {
+      console.error(err);
+      if (err.name === "DocumentNotFoundError") {
+        return res
+          .status(HTTP_STATUS.NOT_FOUND)
+          .send({ message: "Requested resource not found" });
+      }
+      if (err.name === "CastError") {
+        return res
+          .status(HTTP_STATUS.BAD_REQUEST)
+          .send({ message: "Invalid data" });
+      }
+      return res
+        .status(HTTP_STATUS.INTERNAL_SERVER_ERROR)
+        .send({ message: "An error has occurred on the server." });
+    });
+};
 
 const getAllItems = (req, res) => {
   item
@@ -111,7 +153,10 @@ const deleteItemLike = (req, res) => {
     });
 };
 
+// 2. Export updateCurrentUser
 module.exports = {
+  getCurrentUser,
+  updateCurrentUser,
   getAllItems,
   createItem,
   deleteItem,

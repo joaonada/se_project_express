@@ -4,6 +4,7 @@ const User = require("../models/user");
 const { HTTP_STATUS } = require("../utils/constants");
 
 const { JWT_SECRET } = require("../utils/config");
+const { getCurrentUser, updateCurrentUser } = require("./items");
 
 //  GET /users - get current user
 
@@ -89,4 +90,4 @@ const login = (req, res) => {
     });
 };
 
-module.exports = { getUsers, createUser, getUser, HTTP_STATUS, login };
+module.exports = { updateCurrentUser, getCurrentUser,getUsers, createUser, getUser, HTTP_STATUS, login };
