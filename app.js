@@ -11,8 +11,8 @@ const app = express();
 
 
 app.use(cors());
-
-mongoose.connect("mongodb://localhost:27017/wtwr_db");
+const uri = "mongodb+srv://joaonada_db_user:Jersee47@cluster0.mgux474.mongodb.net/?appName=Cluster0";
+mongoose.connect(uri);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
