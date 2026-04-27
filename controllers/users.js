@@ -4,6 +4,29 @@ const User = require("../models/user");
 const { HTTP_STATUS } = require("../utils/constants");
 const { JWT_SECRET } = require("../utils/config");
 
+module.exports.register = (req, res) => {
+  bcrypt.hash(req.body.password, 10)
+    .then((hash) => User.create({
+      email: req.body.email,
+      password: hash,
+      name: req.body.name,
+      avatar: req.body.avatar
+    }))
+    .then((user) => {
+      res.status(HTTP_STATUS.CREATED).send({
+        _id: user._id,
+        email: user.email,
+      });
+    })
+    .catch((err) => {
+      if (err.code === 11000) {
+      res.status(HTTP_STATUS.CONFLICT).json({ message: "User with this email already exists" });
+      } else {
+        res.status(HTTP_STATUS.BAD_REQUEST).json({ message: err.message });
+      }
+    });
+};
+
 const getCurrentUser = (req, res) => {
   const userId = req.user._id;
 
@@ -115,7 +138,7 @@ const login = (req, res) => {
       res.send({ token });
     })
     .catch((err) => {
-      res.status(401).send({ message: err.message });
+      res.status(HTTP_STATUS.UNAUTHORIZED).send({ message: err.message });
     });
 };
 
