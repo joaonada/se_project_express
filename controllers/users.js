@@ -4,7 +4,7 @@ const User = require("../models/user");
 const { HTTP_STATUS } = require("../utils/constants");
 const { JWT_SECRET } = require("../utils/config");
 
-module.exports.register = (req, res) => {
+const register = (req, res) => {
   bcrypt.hash(req.body.password, 10)
     .then((hash) => User.create({
       email: req.body.email,
@@ -147,4 +147,4 @@ const login = (req, res) => {
     });
 };
 
-module.exports = { updateCurrentUser, getCurrentUser,getUsers, createUser, getUser, login };
+module.exports = { updateCurrentUser, getCurrentUser,getUsers, createUser, getUser, login, register };
