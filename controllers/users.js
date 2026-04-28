@@ -87,17 +87,22 @@ const getUsers = (req, res) => {
 };
 
 async function createUser(req, res) {
-  const {} = req.body;
+  const { email, password, name, avatar } = req.body;
   try {
-    const hashedPassword = await bcrypt.hash(email.password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
     const user = await User.create({
-      ...user,
+     email,
+      name,
+      avatar,
       password: hashedPassword
     });
-    return user;
+   res.status(HTTP_STATUS.CREATED).send({
+      _id: user._id,
+      email: user.email,
+    });
   } catch (error) {
     console.error('Error creating user:', error);
-    throw error;
+    res.status(HTTP_STATUS.BAD_REQUEST).send({ message: error.message });
   }
 };
 
