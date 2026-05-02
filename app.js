@@ -1,3 +1,4 @@
+require('dotenv').config();
 const path = require("path");
 const express = require("express");
 const mongoose = require("mongoose");
@@ -8,7 +9,11 @@ const app = express();
 const indexRouter = require("./routes/index");
 
 app.use(cors());
-mongoose.connect("mongodb://127.0.0.1:27017/wtwr_db");
+const mongoUri = process.env.MONGODB_URI;
+module.exports.jwtSecret = process.env.JWT_SECRET;
+mongoose.connect(mongoUri)
+.then(() => console.log('Connected to MongoDB'))
+  .catch((error) => console.error('MongoDB connection error:', error));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
