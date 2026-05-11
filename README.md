@@ -29,3 +29,4 @@ Before committing my code, I have to make sure that the API requests in Postman 
 #### Link of my Project Pitch Video
 https://drive.google.com/file/d/17XitcXF4xMl8esRP0Reo33-fCp5TlFVY/view?usp=drive_link
 
+Link Github: https://github.com/joaonada/se_project_react.git
