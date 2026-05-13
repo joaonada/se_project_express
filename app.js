@@ -12,6 +12,7 @@ app.use(cors());
 const mongoUri = process.env.MONGODB_URI;
 module.exports.jwtSecret = process.env.JWT_SECRET;
 mongoose.connect("mongodb://127.0.0.1:27017/wtwr_db")
+//mongoose.connect(mongoUri || "mongodb://127.0.0.1:27017/wtwr_db")
 .then(() => console.log('Connected to MongoDB'))
   .catch((error) => console.error('MongoDB connection error:', error));
 
